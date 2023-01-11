@@ -3,7 +3,7 @@ import { defaultValue, useDynamicForm } from "./dynamicForm";
 import { Price } from "./Price";
 
 const DynamicForm = () => {
-    const { register, control, handleSubmit } = useDynamicForm()
+    const { register, control, handleSubmit, formState: { errors } } = useDynamicForm()
     const { fields, append, remove } = useFieldArray({
       control,
       name: 'items'
@@ -19,7 +19,8 @@ const DynamicForm = () => {
             return (
               <div key={id}>
                 <input {...register(`items.${index}.name`)} name={`items.${index}.name`} placeholder="Item name"/>
-                
+                {errors.items?.[index]?.name?.message}
+
                 <select {...register(`items.${index}.type`)} name={`items[${index}].type`}>
                   <option value={0}>Items</option>
                   <option value={10}>Item A</option>
